@@ -9,6 +9,11 @@ namespace NegativeBinomialDistribution
             Console.WriteLine($"Binomial Probability {BinomialDistribution(9, 2, 0.5)}");
             Console.WriteLine($"Negative Binomial Probability {NegBinomialDistribution(3, 3, 0.5)}");
             Console.WriteLine($"Negative Binomial Probability {NegBinomialDistributionOriginal(3, 0.5)}");
+
+            var probability = HyperGeometricDistribution(N: 20, K: 6, k: 4, n: 5);
+            Console.WriteLine($"Hypergeometric Probability {probability}");
+
+
         }
 
         public static double BinomialDistribution(int numberOfTrials, int numberOfSuccesses, double probOfSuccess)
@@ -39,6 +44,14 @@ namespace NegativeBinomialDistribution
             return nCr * Math.Pow(probOfSuccess, 3) * Math.Pow((1 - probOfSuccess), (numberOfTrials - 3));
         }
 
+        public static decimal HyperGeometricDistribution(int K, int k, int N, int n)
+        {
+            var numerator = BinomialCoefficient(K, k) * BinomialCoefficient(N - K, n - k);
+            var denomenator = BinomialCoefficient(N, n);
+
+            return (decimal)numerator / (decimal)denomenator;
+        }
+
 
         public static long Factorial(int n)
         {
@@ -54,6 +67,15 @@ namespace NegativeBinomialDistribution
             }
 
             return answer;
+        }
+
+        public static long BinomialCoefficient(int n, int k)
+        {
+            var numerator = Factorial(n);
+
+            var denominator = Factorial(n - k) * Factorial(k);
+
+            return numerator / denominator;
         }
     }
 }
